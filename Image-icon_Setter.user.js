@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Image-icon Setter ⭐
 // @namespace        http://tampermonkey.net/
-// @version        0.1
+// @version        0.2
 // @description        ブログ編集画面でアイコン画像のレイアウトを最適化する
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventryinsertinput.do*
@@ -26,7 +26,6 @@ function wait_target(){
 
 
 function main(target){
-
     let monitor=new MutationObserver(set_img);
     monitor.observe(target, {childList: true});
 
@@ -47,7 +46,16 @@ function main(target){
                                 event.stopImmediatePropagation();
 
                                 img_elem.setAttribute('alt', 'icon');
-                                img_elem.style.cssText="margin-top: -2px; vertical-align: -6px;";
+
+                                let css0="margin-top: -2px; vertical-align: -6px;";
+                                let css1="margin: -2px 2px 0; vertical-align: -6px;"+
+                                    "outline: 1px solid darkgray; outline-offset: -1px; border-radius: 4px;";
+                                if(img_elem.style.outline){
+                                    img_elem.style.cssText=css0; }
+                                else{
+                                    img_elem.style.cssText=css1; }
+
+                                iframe_doc.getSelection().removeAllRanges(); // 画像の反転選択をリセットする
 
                                 let p_elem=img_elem.closest('p');
                                 if(p_elem){
