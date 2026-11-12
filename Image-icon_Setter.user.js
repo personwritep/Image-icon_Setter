@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Image-icon Setter ⭐
 // @namespace        http://tampermonkey.net/
-// @version        0.2
+// @version        0.3
 // @description        ブログ編集画面でアイコン画像のレイアウトを最適化する
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventryinsertinput.do*
@@ -11,6 +11,9 @@
 // @updateURL        https://github.com/personwritep/Image-icon_Setter/raw/main/Image-icon_Setter.user.js
 // @downloadURL        https://github.com/personwritep/Image-icon_Setter/raw/main/Image-icon_Setter.user.js
 // ==/UserScript==
+
+
+let listen=Symbol();
 
 
 let retry=0;
@@ -36,7 +39,11 @@ function main(target){
         if(editor_iframe){ // iframe読込みが実行条件
             let iframe_doc=editor_iframe.contentWindow.document;
             if(iframe_doc){
-                iframe_doc.addEventListener('click', function(event){
+                if(!iframe_doc[listen]){
+                    iframe_doc.addEventListener('click', setter, { capture: true });
+                    iframe_doc[listen]=true; }
+
+                function setter(event){
                     if(event.shiftKey){ // アイコン画像を「Shift+左Click」
                         let elem=iframe_doc.elementFromPoint(event.clientX, event.clientY);
                         let img_elem=elem.closest('img');
@@ -67,7 +74,9 @@ function main(target){
 
                             } // if()
 
-                        }}}, { capture: true });
+                        }} // if(event.shiftKey)
+
+                } // setter()
 
             }}} // set_img()
 
