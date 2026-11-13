@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Image-icon Setter ⭐
 // @namespace        http://tampermonkey.net/
-// @version        0.3
+// @version        0.4
 // @description        ブログ編集画面でアイコン画像のレイアウトを最適化する
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventryinsertinput.do*
@@ -47,8 +47,8 @@ function main(target){
                     if(event.shiftKey){ // アイコン画像を「Shift+左Click」
                         let elem=iframe_doc.elementFromPoint(event.clientX, event.clientY);
                         let img_elem=elem.closest('img');
-                        if(img_elem){ // 24×24pxの画像でアメーバ絵文字を省く
-                            if(img_elem.width=='24' && !img_elem.src.includes('/img/char/')){
+                        if(img_elem){ // height 24pxの画像でアメーバ絵文字を省く
+                            if(img_elem.height=='24' && !img_elem.src.includes('/img/char/')){
                                 event.preventDefault();
                                 event.stopImmediatePropagation();
 
