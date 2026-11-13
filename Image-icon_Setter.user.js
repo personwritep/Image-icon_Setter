@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        Image-icon Setter ⭐
 // @namespace        http://tampermonkey.net/
-// @version        0.4
+// @version        0.3
 // @description        ブログ編集画面でアイコン画像のレイアウトを最適化する
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventryinsertinput.do*
